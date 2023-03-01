@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const Todo = require("../controllers/todos");
+const checkauth = require('../middleware/check-auth');
 
-router.post("/", Todo.createTodo);
-router.get("/", Todo.readTodo);
-router.put("/:id", Todo.updateTodo);
-router.delete("/:id", Todo.deleteTodo);
+router.post("/", checkauth, Todo.createTodo);
+router.get("/", checkauth, Todo.readTodo);
+router.put("/:id", checkauth, Todo.updateTodo);
+router.delete("/:id", checkauth, Todo.deleteTodo);
 
 
 module.exports = router;

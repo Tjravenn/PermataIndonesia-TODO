@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Category = require("../controllers/categorys");
+const checkauth = require('../middleware/check-auth');
 
-router.post("/", Category.createCategory);
-router.get("/", Category.readCategory);
-router.delete("/:id", Category.deleteCategory);
+router.post("/", checkauth, Category.createCategory);
+router.get("/", checkauth, Category.readCategory);
+router.delete("/:id", checkauth, Category.deleteCategory);
 
 
 module.exports = router;
