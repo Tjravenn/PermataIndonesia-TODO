@@ -1,6 +1,6 @@
 const UserModel = require('../models/user');
-const { hashPass } = require('../helpers/bcrypt');
-const { createSign } = require("../helpers/jwt");
+const { hashPass, comparePass } = require('../helpers/bcrypt');
+const jwt = require("jsonwebtoken");
 
 module.exports = class User {
   static async register(req, res, next) {
@@ -50,17 +50,32 @@ module.exports = class User {
       if (!req.body.username) throw new Error('Username is required');
       if (!req.body.password) throw new Error('Password is required');
 
-      // cek username dan password
-      const people = await User.findOne({
+      // cek username
+      const user = await UserModel.findOne({
         username: req.body.username,
-        password: req.body.password,
       });
-      if(!people) throw new Error ('Invalid username and password');
+      if (!user) throw new Error('Invalid username');
+
+      // cek password
+      const validPass = await comparePass(req.body.password, user.password);
+      if (!validPass) throw new Error('Invalid password');
 
       // create jwt
-      
+      const token = jwt.sign(
+        { id: user._id, email: user.email, username: user.username },
+        process.env.SECRET_KEY
+      );
 
+      // respons
+      res.json({
+        status: true,
+        token,
+      });
     } catch (error) {
+      res.json({
+        status: false,
+        error: error.message,
+      });
       console.log(error);
     }
   }

@@ -67,7 +67,7 @@ module.exports = class Todo {
       if (readTodo) throw new Error('TItle already exist');
 
       // upodate todo
-      const success = await TodoModel.findByIdAndUpdate({ _id: req.params.id }, {
+      const result = await TodoModel.findByIdAndUpdate({ _id: req.params.id }, {
         title: req.body.title, categoryId: req.body.categoryId
       },
         { new: true }
@@ -76,7 +76,7 @@ module.exports = class Todo {
       // respons
       res.json({
         status: true,
-        success,
+        result,
       });
     } catch (error) {
       res.json({
