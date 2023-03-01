@@ -8,6 +8,16 @@ const userSchema = new Schema({
     minlength: 6,
     unique: true,
   },
+  name: {
+    type: String,
+    required: true,
+    minLength: 6,
+    unique: true,
+  },
+  phoneNumber: {
+    type: Number,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
