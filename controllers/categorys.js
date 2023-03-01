@@ -23,7 +23,7 @@ module.exports = class Category {
       // respons
       res.json({
         status: true,
-        result
+        result,
       });
     } catch (error) {
       res.json({
@@ -36,21 +36,16 @@ module.exports = class Category {
 
   static async readCategory(req, res, next) {
     try {
-
-      res.status(200).json({
+      const categories = await CategoryModel.find()
+      res.json({
         status: true,
+        categories,
       });
     } catch (error) {
-      console.log(error);
-    }
-  }
-
-  static async updateCategory(req, res, next) {
-    try {
-      res.status(200).json({
-        status: true,
+      res.json({
+        status: false,
+        error: error.message,
       });
-    } catch (error) {
       console.log(error);
     }
   }
