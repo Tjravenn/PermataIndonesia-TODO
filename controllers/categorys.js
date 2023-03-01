@@ -36,7 +36,7 @@ module.exports = class Category {
 
   static async readCategory(req, res, next) {
     try {
-      const categories = await CategoryModel.find()
+      const categories = await CategoryModel.find();
       res.json({
         status: true,
         categories,

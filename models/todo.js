@@ -7,7 +7,7 @@ const todoSchema = new Schema({
     required: true,
     unique: true,
     minLength: 5,
-    maxLength: 20,
+    maxLength: 100,
   },
   status: {
     type: Number,
