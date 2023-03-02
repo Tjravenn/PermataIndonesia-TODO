@@ -60,15 +60,42 @@ module.exports = class Todo {
       if (req.body.title.length > 100) throw new Error('Titlt max length 100');
 
       // cek unique judul todo
-      const readTodo = await TodoModel.findOne({
+      const todo = await TodoModel.findOne({
         title: req.body.title,
       });
 
-      if (readTodo) throw new Error('TItle already exist');
+      if (todo) throw new Error('TItle already exist');
 
       // upodate todo
       const result = await TodoModel.findByIdAndUpdate({ _id: req.params.id }, {
         title: req.body.title, categoryId: req.body.categoryId
+      },
+        { new: true }
+      );
+
+      // respons
+      res.json({
+        status: true,
+        result,
+      });
+    } catch (error) {
+      res.json({
+        status: false,
+        error: error.message,
+      });
+      console.log(error);
+    }
+  }
+
+  static async statusTodo(req, res, next) {
+    try {
+      // validasi
+      if (!req.body.status) throw new Error('Status required');
+      if (req.body.status > 1) throw new Error('Invalid request');
+
+      // update status
+      const result = await TodoModel.findByIdAndUpdate({ _id: req.params.id }, {
+        status: req.body.status,
       },
         { new: true }
       );
