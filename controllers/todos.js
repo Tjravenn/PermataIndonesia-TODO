@@ -19,7 +19,7 @@ module.exports = class Todo {
       const result = await TodoModel.create({
         title: req.body.title,
         status: 0,
-        categoryId: req.body.categoryId,
+        // categoryId: req.body.categoryId,
       });
 
       // respons
@@ -38,7 +38,10 @@ module.exports = class Todo {
 
   static async readTodo(req, res, next) {
     try {
-      const todos = await TodoModel.find();
+      const todos = await TodoModel.find()
+      // .populate({
+      //   path: 'categoryId'
+      // });
       res.json({
         status: true,
         todos,
@@ -68,7 +71,8 @@ module.exports = class Todo {
 
       // upodate todo
       const result = await TodoModel.findByIdAndUpdate({ _id: req.params.id }, {
-        title: req.body.title, categoryId: req.body.categoryId
+        title: req.body.title, 
+        // categoryId: req.body.categoryId
       },
         { new: true }
       );

@@ -13,10 +13,10 @@ const todoSchema = new Schema({
     type: Number,
     required: true,
   },
-  categoryId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'categorys',
-  },
+  // categoryId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'categorys',
+  // },
   createdAt: {
     type: Number,
     default: Date.now(),

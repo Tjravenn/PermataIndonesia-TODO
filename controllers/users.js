@@ -54,7 +54,7 @@ module.exports = class User {
       const user = await UserModel.findOne({
         username: req.body.username,
       });
-      if (!user) throw new Error('Invalid username');
+      if (!user) throw new Error('User not found');
 
       // cek password
       const validPass = await comparePass(req.body.password, user.password);
